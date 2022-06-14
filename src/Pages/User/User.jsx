@@ -1,12 +1,16 @@
 import React from 'react'
 import "./User.css"
-import {Publish, PersonOutline, MailOutline, EventAvailable,SupervisorAccount} from "@material-ui/icons"
+import { Publish, PersonOutline, MailOutline, EventAvailable, SupervisorAccount } from "@material-ui/icons"
+import { Link } from "react-router-dom"
 const User = () => {
   return (
     <div className='user'>
       <div className='userHeaderContainer'>
         <h1 className='userTitle'>Edit User</h1>
-        <button className="userAddButton">Create</button>
+        <Link to="/new-user">
+
+          <button className="userAddButton">Create</button>
+        </Link>
       </div>
       <div className='userContainer'>
         <div className='userShow'>
@@ -54,14 +58,21 @@ const User = () => {
                   className="userUpdateInput"
                 />
               </div>
-              
-              
+              <div className="userUpdateItem">
+                <label>Admin</label>
+                <select>
+                  <option value="true">True</option>
+                  <option value="false">False</option>
+                </select>
+              </div>
+
+
             </div>
             <div className="userUpdateRight">
               <div className="userUpdateUpload">
                 <img
                   className="userUpdateImg"
-                  style={{width:"100px",height:"100px",borderRadius:"10px",objectFit:"cover cover",marginBottom:"10px"}}
+                  style={{ width: "100px", height: "100px", borderRadius: "10px", objectFit: "cover cover", marginBottom: "10px" }}
                   src="https://images.pexels.com/photos/1152994/pexels-photo-1152994.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500"
                   alt=""
                 />
