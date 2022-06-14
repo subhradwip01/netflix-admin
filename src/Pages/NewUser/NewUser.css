@@ -1,0 +1,63 @@
+.newUser{
+    flex:4;
+    padding:0 30px
+}
+.newUserTitle{
+    margin-bottom: 20px;
+}
+.newUserForm{
+  display: flex;
+   width: 100%;
+   flex-wrap: wrap;
+}
+
+.newUserFormLeft{
+    flex:4;
+    margin-right: 10px;
+}
+.newUserFormRight{
+    flex:1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    
+}
+
+.userNewIcon{
+    cursor: pointer;
+}
+
+.newUserImage{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.newUserItem{
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 10px;
+}
+.newUserItem label{
+    margin-bottom:5px;
+}
+.newUserItem input,.newUserAdminSelect{
+    padding: 10px 9px;
+    border-radius: 10px;
+    border: 1px solid #ccc;
+}
+.newUser input:focus,.newUserAdminSelect:focus{
+    outline: none;
+}
+
+.userCreateButton{
+    border-radius: 5px;
+    border: none;
+    padding: 5px;
+    cursor: pointer;
+    background-color: darkblue;
+    color: white;
+    font-weight: 600;
+    font-size: 15px;
+    padding: 10px 20px;
+
+}
