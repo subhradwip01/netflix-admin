@@ -25,7 +25,7 @@ const Users = () => {
         { field: 'id', headerName: 'ID', width: 70 },
         { field: 'user', headerName: 'Username', width: 230 ,renderCell:(params)=>{
             return (
-                <div className='user'>
+                <div className='userTitle'>
                     <img src={params.row.avatar} alt="" srcset="" />{params.row.userName}
                 </div>
             )
