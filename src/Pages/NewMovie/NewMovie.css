@@ -1,5 +1,7 @@
 .newMovie {
     flex: 4;
+    margin: 20px 0;
+    height: 100vh;
   }
   
   .addMovieForm {
@@ -42,3 +44,18 @@
     cursor: pointer;
     align-self: center;
   }
+@media (max-width:480px){
+  .addMovieForm{
+    display: block;
+  }
+
+  .addMovieItem{
+    width: 100%;
+  }
+  .addMovieItem >input{
+    width: 100%;
+  }
+  .addMovieButton{
+    width: 100%;
+  }
+}

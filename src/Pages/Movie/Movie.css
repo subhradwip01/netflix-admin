@@ -1,9 +1,8 @@
-
-
-
 .movie {
   flex: 4;
   padding: 20px;
+  height: 100vh;
+  overflow-x: hidden;
 }
 
 .movieTitleContainer {
@@ -134,4 +133,14 @@
   color:white;
   font-weight: 600;
   cursor: pointer;
+}
+
+@media (max-width:556px){
+  .movieForm{
+    display: block;
+  }
+  .movieUpload{
+    justify-content: center;
+    margin: 10px;
+  }
 }

@@ -11,7 +11,7 @@ const DataTable = ({onDelete,data,type}) => {
         {
             field: 'movie', headerName: 'Movie', width: 200, renderCell: (params) => {
                 return (
-                    <div className='movieTitle'>
+                    <div className='dataTitle'>
                         <img src={params.row.img} alt="" srcset="" />{params.row.title}
                     </div>
                 )

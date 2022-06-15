@@ -54,7 +54,7 @@ const Movie = () => {
             <input type="file" placeholder="Video" />
           </div>
           <div className="movieFormRight">
-            <div className="productUpload">
+            <div className="movieUpload">
               <img
                 src="https://www.cheatsheet.com/wp-content/uploads/2019/12/money-heist-banner.png"
                 alt=""

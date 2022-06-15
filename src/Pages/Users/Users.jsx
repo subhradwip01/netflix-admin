@@ -20,7 +20,7 @@ const Users = () => {
     
     return (
         <div className='users'>
-            <DataTable onDelete={deleteHandler} type="movie" data={data}/>
+            <DataTable onDelete={deleteHandler} type="users" data={data}/>
         </div>
     )
 }

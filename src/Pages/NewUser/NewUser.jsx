@@ -6,7 +6,8 @@ const NewUser = () => {
   return (
     <div className='newUser'>
         <h1 className="newUserTitle">New User</h1>
-        <form className='newUserForm'>
+        <form className='newUserFormContainer'>
+        <div className="newUserForm"> 
         <div className="newUserFormLeft">
            <div className='newUserItem'>
             <label htmlFor='username'>Username</label>
@@ -28,7 +29,6 @@ const NewUser = () => {
                 <option value="false">False</option>
             </select>
            </div>
-            <button className="userCreateButton">Create</button>
            </div>
            <div className='newUserFormRight'>
            <div className='newUserImage'>
@@ -44,7 +44,8 @@ const NewUser = () => {
                 <input type="file" id="file" style={{ display: "none" }} />
                 </div>
            </div>
-
+           </div> 
+           <button className="userCreateButton">Create</button>
         </form>
     </div>
   )

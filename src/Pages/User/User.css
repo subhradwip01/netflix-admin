@@ -3,12 +3,14 @@
     padding: 20px;
     display: flex;
     flex-direction: column;
+    overflow-x: hidden;
 }
 .userHeaderContainer{
     width: 100%;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    margin-bottom: 20px;
 }
 .userAddButton{
    width:80px;
@@ -22,12 +24,19 @@
 }
 .userContainer{
     display: flex;
+    flex-wrap: wrap;
 }
 .userShow{
     flex: 1;
     padding: 20px;
     -webkit-box-shadow: 0px 0px 15px -10px rgba(0, 0, 0, 0.75);
     box-shadow: 0px 0px 15px -10px rgba(0, 0, 0, 0.75);
+}
+.userShowImage{
+    width: 70px;
+    height: 70px;
+    border-radius: 20%;
+    object-fit: cover;
 }
 .userUpdate{
     flex: 2;
@@ -38,6 +47,8 @@
 .userShowTop{
     display: flex;
     margin-bottom: 20px;
+    align-items: center;
+    justify-content: space-between;
 }
 .userShowInfo{
     display: flex;
@@ -85,11 +96,19 @@
     font-size: 14px;
 }
 
-.userUpdateInput{
+.userUpdateInput,.userUpdateItem select{
     border: none;
     width: 250px;
     height: 30px;
+    padding: 5px 3px;
     border-bottom: 1px solid gray;
+}
+.userUpdateInput:focus{
+    outline: none;
+    border-bottom: 2px solid black;
+}
+.userUpdateItem select:focus{
+    outline: none;
 }
 
 .userUpdateRight{
@@ -116,4 +135,38 @@
     background-color: darkblue;
     color: white;
     font-weight: 600;
+}
+@media (max-width:475px){
+    .userUpdateForm{
+        display: block;
+    }
+    .userUpdateRight{
+        margin-top: 10px;
+        
+    }
+    .userUpdateUpload{
+        justify-content: center;
+    }
+    
+    .userUpdateInput,.userUpdateItem select{
+        width: 100%;
+    }
+}
+@media (max-width:373px){
+    .userShowImage{
+        width: 40px;
+        height: 40px;
+    }
+    .userShowUsername{
+        font-size: 15px;
+        text-align: right;
+    }
+    .userTitle{
+        font-size: 20px;
+    }
+}
+@media (max-width:325px){
+    .userShowInfo{
+        display: block;
+    }
 }

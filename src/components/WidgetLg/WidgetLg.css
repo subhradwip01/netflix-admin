@@ -12,6 +12,7 @@
 }
 .widgetLgTable{
     width: 100%;
+    overflow-x: scroll;
 
 }
 .widgetLgTh{
