@@ -1,0 +1,29 @@
+
+.dataTitle{
+    display: flex;
+}
+.dataTitle img{
+    width: 40px;
+    height: 40px;
+    object-fit: cover;
+    border-radius: 50%;
+    margin-right: 5px;
+}
+.dataEdit{
+   border: none;
+   border-radius: 10px;
+   padding: 5px 10px; 
+   background-color: #3bb077;
+   color: white;
+   cursor: pointer;
+   margin-right: 10px;
+   display: flex;
+   align-items: center;
+}
+.dataEdit svg{
+    margin-right: 5px;
+}
+.dataDelete{
+    color: red;
+    cursor: pointer;
+}
