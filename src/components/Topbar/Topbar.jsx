@@ -1,7 +1,8 @@
 import React from 'react'
 import "./topbar.css"
-import {NotificationsNone,Language,Settings} from '@material-ui/icons';
-const Topbar = () => {
+import {Settings,ExitToApp} from '@material-ui/icons';
+import HamMenu from '../HamMenu/HamMenu';
+const Topbar = ({mobileSidebar,onShow,showMobileSidebar}) => {
   return (
     <div className='topbar'>
         <div className='topbarWrapper'>
@@ -9,18 +10,15 @@ const Topbar = () => {
                 <spna className="logo">netadmin</spna>
             </div>
             <div className='topRight'>
-                <div className="topbarIconContainer">
-                    <NotificationsNone/>
-                    <span className='topIconBadge'>2</span>
-                </div>
-                <div className="topbarIconContainer">
-                    <Language/>
-                    <span className='topIconBadge'>2</span>
-                </div>
-                <div className="topbarIconContainer">
+                {!mobileSidebar && <><div className="topbarIconContainer">
                     <Settings/>
                 </div>
-                <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png" alt="profilepic" className='topAvatar'/>
+                <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png" alt="profilepic" className='topAvatar'/> 
+                
+                <button className='topbarLogoutButton'><ExitToApp />Logout</button></>}
+                {mobileSidebar && <div className="topbarIconContainer" onClick={onShow}>
+                    <HamMenu showMenu={showMobileSidebar}/>
+                </div>}
             </div>
         </div>
     </div>

@@ -12,7 +12,7 @@
 }
 .widgetLgTable{
     width: 100%;
-    overflow-x: scroll;
+    overflow-x: auto;
 
 }
 .widgetLgTh{
@@ -26,4 +26,9 @@
 }
 .widgetLg tr:nth-child(even){
     background-color: #f2f2f2;
+}
+@media (max-width:430px){
+    .widgetLgTable{
+        display: block;
+    }
 }

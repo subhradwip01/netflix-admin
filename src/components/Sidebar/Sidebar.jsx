@@ -2,6 +2,7 @@ import React from 'react'
 import "./Sidebar.css"
 import {LineStyle,TrendingUp,Timeline,PersonOutline,Slideshow
 } from '@material-ui/icons';
+import { NavLink } from 'react-router-dom';
 const Sidebar = () => {
   return (
     <div className='sidebar'>
@@ -10,7 +11,7 @@ const Sidebar = () => {
                <h3 className='sidebarTitle'>Dashboard</h3>
                <ul className='sidebarList'>
                 <li className="sidebarListItem">
-                    <LineStyle className="sidebarIcon"/>Home
+                    <NavLink to="/" className={(isActive)=>isActive.isActive  && "active"}><LineStyle className="sidebarIcon"/>Home</NavLink>
                 </li>
                 <li className="sidebarListItem">
                     <Timeline className="sidebarIcon"/>Analytics
@@ -24,10 +25,10 @@ const Sidebar = () => {
                <h3 className='sidebarTitle'>Quick Menu</h3>
                <ul className='sidebarList'>
                 <li className="sidebarListItem">
-                    <PersonOutline className="sidebarIcon"/>Users
+                    <NavLink exact to="/users" className={(isActive)=>isActive.isActive && "active"}><PersonOutline className="sidebarIcon"/>Users</NavLink>
                 </li>
                 <li className="sidebarListItem">
-                    <Slideshow className="sidebarIcon"/>Movies
+                    <NavLink eaxct to="/movies" className={(isActive)=>isActive.isActive  && "active"}><Slideshow className="sidebarIcon"/>Movies</NavLink>
                 </li>
                </ul> 
             </div>

@@ -33,21 +33,21 @@
 .topbarIconContainer:hover{
     color: black;
 }
-.topIconBadge{
-    width: 15px;
-    position: absolute;
-    top:-5px;
-    right: -5px;
-    background-color: red;
-    color: #ffff;
-    border-radius: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
 
 .topAvatar{
     width: 40px;
     margin-top: 5px;
     border-radius: 50%;
+}
+
+.topbarLogoutButton{
+    display: flex;
+    align-items: center;
+    padding: 8px 10px;
+    width: 100%;
+    font-size: 15px;
+    background-color: rgba(128, 128, 128, 0.274);
+    border-radius: 10px;
+    border: none;
+    margin-left: 10px;
 }

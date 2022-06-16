@@ -136,7 +136,7 @@
     color: white;
     font-weight: 600;
 }
-@media (max-width:475px){
+@media (max-width:620px){
     .userUpdateForm{
         display: block;
     }
