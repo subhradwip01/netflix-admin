@@ -1,0 +1,76 @@
+.mobileSidebar{
+    position: fixed;
+    height: 96vh;
+    background-color: white;
+    z-index: 999999;
+    right: 0;
+    transform: translateX(180px);
+    transition: transform 0.2s linear;
+    /* overflow-y: scroll; */
+}
+.showMobileMenu{
+    transform: translateX(0px);
+
+}
+
+
+.mobileSidebarWrappper{
+    color: rgba(27, 26, 26, 0.819);
+    height: 100%;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+.mobileSidebarMenu{
+    margin-bottom: 10px;
+}
+.mobileSidebarList{
+    list-style: none;
+}
+
+.mobileSidebarListItem a{
+    color: rgba(27, 26, 26, 0.819);
+    display: flex;
+    width: 100%;
+    padding: 5px;
+}
+.mobileSidebarListItem .active,
+.mobileSidebarListItem:hover{
+    background-color: rgba(219, 217, 217, 0.845);
+    border-radius: 10px;
+
+}
+.mobileSidebarListItem{
+    padding: 5px;
+    display: flex;
+    margin-bottom: 10px;
+    cursor: pointer;
+    align-items: center;
+}
+.mobileSidebarIcon{
+    margin-right: 5px;
+    font-size: 20px !important;
+}
+
+.mobileSidebarAvatar{
+    width: 40px;
+    border-radius: 50%;
+    margin-right: 5px;
+}
+
+.mobileSidebarBottom .mobileSidebarList .mobileSidebarListItem{
+    border-bottom: 1px solid grey;
+    padding: 10px 0;
+}
+
+
+.mobileSidebarLogoutButton{
+    display: flex;
+    align-items: center;
+    padding: 8px;
+    width: 100%;
+    font-size: 17px;
+    border: none;
+    background-color: transparent;
+}
