@@ -1,0 +1,90 @@
+.login {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 97vh;
+    background-color: #5E91F8;
+    flex-direction: column;
+
+}
+
+.errMsg {
+    margin-bottom: 10px;
+    padding: 20px 10px;
+    background-color: #F6D7DA;
+    width: 310px;
+    border-radius: 10px;
+    text-align: center;
+    color: #D16C36;
+}
+
+.loginForm {
+    display: flex;
+
+    justify-content: center;
+    flex-direction: column;
+    padding: 30px 20px;
+    width: 300px;
+    background-color: #ffff;
+    border-radius: 12px;
+    -webkit-box-shadow: 10px 10px 9px -6px rgba(71, 121, 221, 1);
+    -moz-box-shadow: 10px 10px 9px -6px rgba(71, 121, 221, 1);
+    box-shadow: 10px 10px 9px -6px rgba(71, 121, 221, 1);
+
+}
+
+.adminImg {
+    text-align: center;
+}
+
+.adminImg img {
+    width: 90px;
+}
+
+.formControl {
+    display: flex;
+    flex-direction: column;
+
+    padding: 10px 0;
+
+}
+
+.formControl label {
+    font-weight: 600;
+    margin-bottom: 7px;
+}
+
+.formInput {
+    padding: 8px 7px;
+    border: 1px solid grey;
+    border-radius: 8px;
+}
+
+.formInput:focus {
+    outline: none;
+    border: 1px solid #5E91F8;
+}
+
+
+.loginButton {
+    margin-top: 10px;
+    padding: 10px;
+    font-size: 15px;
+    border-radius: 10px;
+    border: none;
+    background-color: #5E91F8;
+    color: #ffff;
+    cursor: pointer;
+}
+
+.loginButton:hover {
+    background-color: #417aeb;
+}
+
+@media (max-width:386px) {
+
+    .loginForm,
+    .errMsg {
+        width: 70vw;
+    }
+}
