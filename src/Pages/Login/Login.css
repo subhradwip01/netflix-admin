@@ -2,10 +2,11 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 97vh;
+    height: 100vh;
     background-color: #5E91F8;
     flex-direction: column;
 
+    width:100%;
 }
 
 .errMsg {
@@ -79,6 +80,11 @@
 
 .loginButton:hover {
     background-color: #417aeb;
+}
+
+.loginButton:disabled{
+    background-color: #7199e9;
+    cursor: not-allowed;
 }
 
 @media (max-width:386px) {
