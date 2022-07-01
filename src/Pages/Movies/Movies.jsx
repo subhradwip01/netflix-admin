@@ -1,30 +1,45 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect, useContext } from "react";
 import "./Movies.css";
-import DataTable from '../../components/DataTable/DataTable';
+import DataTable from "../../components/DataTable/DataTable";
+import { getMovies, deleteMovies } from "../../context/movieContext/apiCalls";
+import { MovieContext } from "../../context/movieContext/MovieContetxt";
+import { AuthContext } from "../../context/authContext/AuthContext";
 
-const rows = [
-    { id: 1, img: "https://www.cheatsheet.com/wp-content/uploads/2019/12/money-heist-banner.png", title: "Money Heist", genre: "Thriller", year: 2020, limit: 16, isSeries: "True" },
-    { id: 2, img: "https://www.cheatsheet.com/wp-content/uploads/2019/12/money-heist-banner.png", title: "Money Heist", genre: "Thriller", year: 2020, limit: 16, isSeries: "True" },
-    { id: 3, img: "https://www.cheatsheet.com/wp-content/uploads/2019/12/money-heist-banner.png", title: "Money Heist", genre: "Thriller", year: 2020, limit: 16, isSeries: "True" },
-    { id: 4, img: "https://www.cheatsheet.com/wp-content/uploads/2019/12/money-heist-banner.png", title: "Money Heist", genre: "Thriller", year: 2020, limit: 16, isSeries: "True" },
-    { id: 5, img: "https://www.cheatsheet.com/wp-content/uploads/2019/12/money-heist-banner.png", title: "Money Heist", genre: "Thriller", year: 2020, limit: 16, isSeries: "True" },
-    { id: 6, img: "https://www.cheatsheet.com/wp-content/uploads/2019/12/money-heist-banner.png", title: "Money Heist", genre: "Thriller", year: 2020, limit: 16, isSeries: "True" },
-    { id: 7, img: "https://www.cheatsheet.com/wp-content/uploads/2019/12/money-heist-banner.png", title: "Money Heist", genre: "Thriller", year: 2020, limit: 16, isSeries: "True" },
-
-]
 const Movies = () => {
-    const [data, setData] = useState(rows || [])
+  // const [data, setData] = useState([]);
 
-    const deleteHandler = (id) => {
-        let newD = data.filter(d => d.id !== id);
-        setData(newD)
-    }
-    
-    return (
-        <div className="movies">
-            <DataTable onDelete={deleteHandler} type="movie" data={data}/>
-        </div>
-    )
-}
+  const {
+    movies: data,
+    isFetching,
+    error,
+    dispatch,
+  } = useContext(MovieContext);
+  const { user } = useContext(AuthContext);
 
-export default Movies
+  const deleteHandler = async (id) => {
+    await deleteMovies(dispatch, id, user.token);
+  };
+  console.log(data);
+  useEffect(() => {
+    getMovies(dispatch, user.token);
+  }, []);
+
+
+  // if (error) return "Sorry unable to get any movies";
+
+  return (
+    <div className="movies">
+      {data.length<1 && <h1>No Movies found</h1>}
+      {data && data.length > 0 && (
+        <DataTable
+          onDelete={deleteHandler}
+          type="movie"
+          data={data}
+          isDeleteing={isFetching}
+        />
+      )}
+    </div>
+  );
+};
+
+export default Movies;
