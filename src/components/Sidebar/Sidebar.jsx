@@ -1,6 +1,7 @@
 import React from 'react'
 import "./Sidebar.css"
-import {LineStyle,TrendingUp,Timeline,PersonOutline,Slideshow
+import {LineStyle,TrendingUp,Timeline,PersonOutline,Slideshow,FormatListBulleted
+
 } from '@material-ui/icons';
 import { NavLink } from 'react-router-dom';
 const Sidebar = () => {
@@ -29,6 +30,9 @@ const Sidebar = () => {
                 </li>
                 <li className="sidebarListItem">
                     <NavLink eaxct to="/movies" className={(isActive)=>isActive.isActive  && "active"}><Slideshow className="sidebarIcon"/>Movies</NavLink>
+                </li>
+                <li className="sidebarListItem">
+                    <NavLink eaxct to="/lists" className={(isActive)=>isActive.isActive  && "active"}><FormatListBulleted className="sidebarIcon"/>List</NavLink>
                 </li>
                </ul> 
             </div>

@@ -1,5 +1,5 @@
 import React from 'react'
-import { Settings, LineStyle, TrendingUp, Timeline, PersonOutline, Slideshow, ExitToApp } from '@material-ui/icons';
+import { Settings, LineStyle, TrendingUp, Timeline, PersonOutline, Slideshow, ExitToApp,FormatListBulleted} from '@material-ui/icons';
 import "./MobileSidebar.css"
 import { NavLink } from 'react-router-dom';
 const MobileSidebar = ({showMobileSidebar,onShow}) => {
@@ -29,6 +29,9 @@ const MobileSidebar = ({showMobileSidebar,onShow}) => {
                             </li>
                             <li className="mobileSidebarListItem">
                                 <NavLink eaxct to="/movies" className={(isActive) => isActive.isActive && "active"} onClick={onShow}><Slideshow className="mobileSidebarIcon" />Movies</NavLink>
+                            </li>
+                            <li className="mobileSidebarListItem">
+                                <NavLink eaxct to="/lists" className={(isActive) => isActive.isActive && "active"} onClick={onShow}><FormatListBulleted className="mobileSidebarIcon" />List</NavLink>
                             </li>
                         </ul>
                     </div>
