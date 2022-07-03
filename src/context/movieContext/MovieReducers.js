@@ -67,7 +67,7 @@ const MovieReducers = (state, action) => {
             isFetching:true,
         }
     case "UPADTE_MOVIE_SUCCESS":
-        const index=state.movies.findIndex(movie=>movie.id==action.payload.id)
+        const index=state.movies.findIndex(movie=>movie.id===action.payload.id)
         const updatedMovies=[...state.movies];
         updatedMovies[index]=action.payload;
         console.log(updatedMovies)

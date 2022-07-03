@@ -20,7 +20,7 @@ export const getMovies = async (dispatch, token) => {
   try {
     const res = await axios.get("/movies", {
       headers: {
-        Authorization: `Bearer ${token}`,
+        Authorization: `Bearer ${JSON.parse(localStorage.getItem("user")).token}`,
       },
     });
     let movies = [];
@@ -53,7 +53,7 @@ export const deleteMovies = async (dispatch, id, token) => {
   try {
     await axios.delete(`/movies/${id}`, {
       headers: {
-        Authorization: `Bearer ${token}`,
+        Authorization: `Bearer ${JSON.parse(localStorage.getItem("user")).token}`,
       },
     });
     dispatch(deleteMoviesSuccess(id));
@@ -69,7 +69,7 @@ export const createMovie = async (dispatch, m, token) => {
   try {
     const res = await axios.post('/movies/add', m, {
       headers: {
-        Authorization: `Bearer ${token}`,
+        Authorization: `Bearer ${JSON.parse(localStorage.getItem("user")).token}`,
       },
     });
     const movie = res.data.movie;
@@ -101,7 +101,7 @@ export const upadateMovie= async (dispatch,m,token)=>{
     const {id,...movieDesc}=m;
     const res=await axios.put(`/movies/${id}`,movieDesc, {
       headers: {
-        Authorization: `Bearer ${token}`,
+        Authorization: `Bearer ${JSON.parse(localStorage.getItem("user")).token}`,
       },
     });
     const movie = res.data.updatedMovie;
