@@ -1,28 +1,45 @@
-import React,{useState} from 'react'
-import DataTable from '../../components/DataTable/DataTable'
-import "./Users.css"
-const rows = [
-    { id: 1,avatar:"https://images.pexels.com/photos/3992656/pexels-photo-3992656.png?auto=compress&cs=tinysrgb&dpr=2&w=500", userName: 'Snow',email:"xyz@gmail.com" },
-    { id: 2,avatar:"https://images.pexels.com/photos/3992656/pexels-photo-3992656.png?auto=compress&cs=tinysrgb&dpr=2&w=500", userName: 'Snow',email:"xyz@gmail.com" },
-    { id: 3,avatar:"https://images.pexels.com/photos/3992656/pexels-photo-3992656.png?auto=compress&cs=tinysrgb&dpr=2&w=500", userName: 'Snow',email:"xyz@gmail.com" },
-    { id: 4,avatar:"https://images.pexels.com/photos/3992656/pexels-photo-3992656.png?auto=compress&cs=tinysrgb&dpr=2&w=500", userName: 'Snow',email:"xyz@gmail.com" },
-    { id: 5,avatar:"https://images.pexels.com/photos/3992656/pexels-photo-3992656.png?auto=compress&cs=tinysrgb&dpr=2&w=500", userName: 'Snow',email:"xyz@gmail.com" },
-    { id: 6,avatar:"https://images.pexels.com/photos/3992656/pexels-photo-3992656.png?auto=compress&cs=tinysrgb&dpr=2&w=500", userName: 'Snow',email:"xyz@gmail.com" },
-    
-];
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import DataTable from "../../components/DataTable/DataTable";
+import "./Users.css";
+import { deleteUser, getUsers } from "../../context/userConetxt/apiCalls";
+import { UserContext } from "../../context/userConetxt/UserContext";
+import { useContext } from "react";
+import { Link } from "react-router-dom";
 const Users = () => {
-    const [data,setData]=useState(rows || [])
-   
-    const deleteHandler=(id)=>{
-        let newD=data.filter(d=>d.id!==id);
-        setData(newD)
-    }
-    
-    return (
-        <div className='users'>
-            <DataTable onDelete={deleteHandler} type="users" data={data}/>
-        </div>
-    )
-}
+  const {
+    users: data,
+    isFetching,
+    error,
+    dispatch,
+  } = useContext(UserContext);
+  
 
-export default Users
+  
+  console.log(data);
+  useEffect(() => {
+    getUsers(dispatch);
+  }, []);
+
+  const deleteHandler = async (id) => {
+    await deleteUser(dispatch, id);
+  };
+  console.log(data)
+  return (
+    <div className="users">
+      <Link to="/new-user">
+          <button className="productAddButton">Create</button>
+      </Link>
+      {!isFetching && data.length<1 && <h1>No Movies found</h1>}
+      {!isFetching && data && data.length > 0 && (
+        <DataTable
+          onDelete={deleteHandler}
+          data={data}
+          isDeleteing={isFetching}
+        />
+      )}
+    </div>
+  );
+};
+
+export default Users;
