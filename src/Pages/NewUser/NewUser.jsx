@@ -1,8 +1,61 @@
-import React from 'react'
+import React,{useContext,useState} from 'react'
 import "./NewUser.css"
 import { Publish } from '@material-ui/icons'
+import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
+import storage from "../../firebase";
+import { UserContext } from '../../context/userConetxt/UserContext';
+import { createUser } from '../../context/userConetxt/apiCalls';
+import { async } from '@firebase/util';
 
 const NewUser = () => {
+  const [userdata,setUserData]=useState({
+    username:"",
+    email:"",
+    password:"",
+    isAdmin:"",
+    profilePic:""
+  });
+  const [img,setImg]=useState(null);
+  const [uploaded,setUploaed]=useState(false);
+  const {dispatch,isFething,error}=useContext(UserContext)
+  
+  const userInputHandler=(e)=>{
+    setUserData({...userdata,[e.target.name]:e.target.value})
+  }
+  const profilePicHandler=(e)=>{
+    setImg(e.target.files[0])
+  }
+  
+ const uploadHandler=(e)=>{
+  e.preventDefault();
+  const filename=new Date().getTime() + img.name
+      const bucketRef = ref(storage, `profiles/${filename}`);
+      const uploadTask = uploadBytesResumable(bucketRef, img);
+      uploadTask.on(
+        "state_changed",
+        (snapshot) => {
+          const progress =
+            (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+             console.log("Upload is " + progress + "% done");
+        },
+        (err) => {
+          console.log(err);
+        },
+        () => {
+          getDownloadURL(uploadTask.snapshot.ref).then((url) => {
+            setUserData((prev) => ({ ...prev, profilePic: url }));
+            setUploaed(true)
+          });
+        }
+      );
+ }
+
+ const createUserHandler= async (e)=>{
+    e.preventDefault();
+    console.log(userdata);
+    await createUser(dispatch,userdata);
+ }
+
   return (
     <div className='newUser'>
         <h1 className="newUserTitle">New User</h1>
@@ -11,19 +64,19 @@ const NewUser = () => {
         <div className="newUserFormLeft">
            <div className='newUserItem'>
             <label htmlFor='username'>Username</label>
-            <input type="text" name="username" id="username" placeholder='eg. jhon123'/>
+            <input type="text" name="username" id="username" placeholder='eg. jhon123' value={userdata.username} onChange={userInputHandler}/>
            </div>
            <div className='newUserItem'>
             <label htmlFor='email'>Email</label>
-            <input type="text" name="email" id="email" placeholder='eg. jhon@gmail.com'/>
+            <input type="text" name="email" id="email" placeholder='eg. jhon@gmail.com' value={userdata.email} onChange={userInputHandler}/>
            </div>
            <div className='newUserItem'>
             <label htmlFor='password'>Password</label>
-            <input type="password" name="email" id="email" placeholder='eg. jhon@gmail.com'/>
+            <input type="password" name="password" id="password" placeholder='eg. jhon@gmail.com' value={userdata.password} onChange={userInputHandler}/>
            </div>
            <div className='newUserItem'>
             <label htmlFor='admin'>Admin</label>
-            <select className="newUserAdminSelect" id="admin" name="admin">
+            <select className="newUserAdminSelect" id="admin" name="isAdmin" onChange={userInputHandler}>
                 <option>Select Admin or Not</option>
                 <option value="true">True</option>
                 <option value="false">False</option>
@@ -32,20 +85,22 @@ const NewUser = () => {
            </div>
            <div className='newUserFormRight'>
            <div className='newUserImage'>
-           <img
+          {img && <img
                   className="userUpdateImg"
                   style={{ width: "100px", height: "100px", borderRadius: "10px", objectFit: "cover cover", marginBottom: "10px" }}
-                  src="https://images.pexels.com/photos/1152994/pexels-photo-1152994.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500"
+                  src={URL.createObjectURL(img)}
                   alt=""
-                />
+                  
+                />}
                 <label htmlFor="file">
                   <Publish className="userNewIcon" />
                 </label>
-                <input type="file" id="file" style={{ display: "none" }} />
+                <input type="file" id="file" style={{ display: "none" }} onChange={profilePicHandler}/>
                 </div>
            </div>
            </div> 
-           <button className="userCreateButton">Create</button>
+           {img && !uploaded ? <button className="userCreateButton" onClick={uploadHandler}>Upload</button>
+           : <button className="userCreateButton" onClick={createUserHandler}>Create</button>}
         </form>
     </div>
   )
