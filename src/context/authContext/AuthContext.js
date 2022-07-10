@@ -1,6 +1,7 @@
-import AuthReducer from "./AuthReducers";
 import {createContext,useReducer,useEffect} from "react"
+import AuthReducer from "./AuthReducers";
 import { logout } from "./AuthActions";
+import { Navigate } from "react-router-dom";
 const INITIAL_STATE={
     user:JSON.parse(localStorage.getItem("user")) || null,
     isFetching:false,
@@ -13,7 +14,8 @@ const INITIAL_STATE={
 export const AuthContext=createContext(INITIAL_STATE);
 const AuthContextProvider=({children})=>{
     const [state,dispatch]=useReducer(AuthReducer,INITIAL_STATE)
-    useEffect(() => {
+    
+    useEffect(() => {  
       localStorage.setItem("user",JSON.stringify(state.user))
     }, [state.user])
 

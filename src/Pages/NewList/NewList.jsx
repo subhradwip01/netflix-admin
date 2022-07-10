@@ -32,7 +32,7 @@ const NewList=() =>{
   const handleSubmit =async (e) => {
     e.preventDefault();
     await createList(list, dispatch);
-    navigate(-1);
+    // navigate(-1);
   };
 
   return (

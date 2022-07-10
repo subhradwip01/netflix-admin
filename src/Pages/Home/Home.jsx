@@ -1,10 +1,11 @@
-import React, { useState, useEffect, useMemo } from "react";
+import React, { useState, useEffect, useMemo, useContext } from "react";
 import FeaturedInfo from "../../components/FeaturedInfo/FeaturedInfo";
 import Chart from "../../components/Chart/Chart";
 import "./Home.css";
 import WidgetLg from "../../components/WidgetLg/WidgetLg";
 import WidgetSm from "../../components/WidgetSm/WidgetSm";
 import axios from "axios";
+import { AuthContext } from "../../context/authContext/AuthContext";
 const Home = () => {
   const months = useMemo(
     () => [
@@ -27,14 +28,14 @@ const Home = () => {
 
   const [userStatData, setUserStatData] = useState([]);
   const [userStatError, setUserStateError] = useState(false);
-
+  const {user} = useContext(AuthContext)
   useEffect(() => {
     const getData = async () => {
       try {
         const res = await axios.get("/users/stats", {
           headers: {
             Authorization:
-              "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyNzJhMGYwOTY2YTNkMDdlNjlmZjk5MSIsImlzQWRtaW4iOnRydWUsImlhdCI6MTY1NTQ2OTg3OCwiZXhwIjoxNjU1NTU2Mjc4fQ.w5hP5O3tML8A9TCbDwetZYg2u-A8e2u-rfoZSLE8KQU",
+              `Bearer ${user.token}`,
           },
         });
         if (res.status === 403) {

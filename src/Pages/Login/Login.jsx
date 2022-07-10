@@ -1,5 +1,5 @@
 import React, { useState, useContext } from "react";
-import { Navigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 import { login } from "../../context/authContext/apiCalls";
 import { AuthContext } from "../../context/authContext/AuthContext";
 import "./Login.css";
@@ -12,6 +12,7 @@ const Login = () => {
     is: false,
     message: "",
   });
+  const navigate=useNavigate();
 
   const { isFetching, error, dispatch, user } = useContext(AuthContext);
 
@@ -35,9 +36,10 @@ const Login = () => {
     await login({ username: data.email, password: data.password }, dispatch);
   };
 
-  if (user) {
-    return <Navigate to="/" />;
-  }
+  // if(user){
+  //   return navigate("/")
+  // }
+ 
   return (
     <div className="login">
       {err.is ||

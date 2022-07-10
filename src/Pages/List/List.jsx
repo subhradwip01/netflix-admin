@@ -20,7 +20,7 @@ const List=()=> {
     // const {_id,...updatedData}=formData;
     console.log(formData)
     await updateList(dispatch,formData)
-    navigate("/lists")
+    // navigate("/lists")
   }
   return (
     <div className="product">

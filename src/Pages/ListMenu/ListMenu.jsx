@@ -17,7 +17,6 @@ const ListMenu=()=> {
   
   
   const handleDelete = (id) => {
-    console.log(id);
     deleteList(id, dispatch);
   };
 

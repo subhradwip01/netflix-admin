@@ -27,3 +27,7 @@
     color: red;
     cursor: pointer;
 }
+.deleting{
+    color: rgb(239, 191, 191);
+    cursor: not-allowed;
+}

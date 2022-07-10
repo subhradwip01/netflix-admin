@@ -44,6 +44,11 @@
     cursor: pointer;
     align-self: center;
   }
+
+  .addMovieButton:disabled{
+    background-color: #7199e9;
+    cursor: not-allowed;
+}
 @media (max-width:480px){
   .addMovieForm{
     display: block;

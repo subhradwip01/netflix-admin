@@ -1,11 +1,13 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect ,useContext} from "react";
 import axios from "axios";
 import "./WidgetSm.css";
 import { Email, Person } from "@material-ui/icons";
+import { AuthContext } from "../../context/authContext/AuthContext";
 
 export default function WidgetSm() {
   const [latestUser, setLatestUser] = useState([]);
   const [error, setError] = useState(false);
+  const {user} = useContext(AuthContext)
 
   useEffect(() => {
     const getLatestUser = async () => {
@@ -13,7 +15,7 @@ export default function WidgetSm() {
         const res = await axios.get("/users?latest=true", {
           headers: {
             Authorization:
-              "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyNzJhMGYwOTY2YTNkMDdlNjlmZjk5MSIsImlzQWRtaW4iOnRydWUsImlhdCI6MTY1NTQ2OTg3OCwiZXhwIjoxNjU1NTU2Mjc4fQ.w5hP5O3tML8A9TCbDwetZYg2u-A8e2u-rfoZSLE8KQU",
+            `Bearer ${user.token}`,
           },
         });
         if (res.status !== 200) {

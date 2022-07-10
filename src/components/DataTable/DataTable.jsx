@@ -4,7 +4,7 @@ import { Delete, Edit } from "@material-ui/icons"
 import { Link } from 'react-router-dom'
 import { DataGrid } from '@material-ui/data-grid';
 
-const DataTable = ({onDelete,data,type}) => {
+const DataTable = ({onDelete,data,type, isDeleteing}) => {
 
     const fieldSetMovie = [
         { field: 'id', headerName: 'ID', width: 70 },
@@ -24,7 +24,7 @@ const DataTable = ({onDelete,data,type}) => {
         {
             field: "action", headerName: "Action", width: 150, renderCell: params => {
                return( <>
-                    <Link to={`/movies/${params.row.id}`}>
+                    <Link to={`/movies/${params.row.id}`} state={{movie:params.row}}>
                         <button className="dataEdit"><Edit />Edit</button>
                     </Link>
                     <Delete className="dataDelete" onClick={() => onDelete(params.row.id)} />
@@ -36,15 +36,16 @@ const DataTable = ({onDelete,data,type}) => {
     ];
 
     const fieldSetUser = [
-        { field: 'id', headerName: 'ID', width: 70 },
-        { field: 'user', headerName: 'Username', width: 230 ,renderCell:(params)=>{
+        { field: '_id', headerName: 'ID', width: 70 },
+        { field: 'username', headerName: 'Username', width: 230 ,renderCell:(params)=>{
             return (
                 <div className='dataTitle'>
-                    <img src={params.row.avatar} alt="" srcset="" />{params.row.userName}
+                    <img src={params.row.profilePic} alt="" srcset="" />{params.row.username}
                 </div>
             )
         }},
         { field: 'email', headerName: 'Email', width: 200 },
+        { field: 'isAdmin', headerName: 'isAdmin', width: 200 },
         {
             field:"action",
             headerName:"Acttion",
@@ -52,10 +53,10 @@ const DataTable = ({onDelete,data,type}) => {
             renderCell:params=>{
                return (
                 <>
-                <Link to={`${params.row.id}`}>
+                <Link to={`/users/${params.row._id}`} state={{user:params.row}}>
                     <button className="dataEdit"><Edit/>Edit</button>
                 </Link>
-                <Delete  className='dataDelete' onClick={()=>onDelete(params.row.id)}/>
+                <Delete  className={`dataDelete ${isDeleteing && ''}`} onClick={()=>onDelete(params.row._id)}/>
                 </>
                ) 
             }
@@ -71,6 +72,7 @@ const DataTable = ({onDelete,data,type}) => {
                 rowsPerPageOptions={[5]}
                 checkboxSelection
                 disableSelectionOnClick
+                getRowId={(r) => r._id || r.id}
             />
     )
 }

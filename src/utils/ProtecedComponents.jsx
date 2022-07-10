@@ -9,8 +9,6 @@ const ProtecedComponents = ({Component}) => {
     return <Navigate to="login" replace/>
   }
 
-  
-
   return Component
 }
 

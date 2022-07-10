@@ -4,7 +4,7 @@ import DataTable from "../../components/DataTable/DataTable";
 import { getMovies, deleteMovies } from "../../context/movieContext/apiCalls";
 import { MovieContext } from "../../context/movieContext/MovieContetxt";
 import { AuthContext } from "../../context/authContext/AuthContext";
-
+import { Link } from "react-router-dom";
 const Movies = () => {
   // const [data, setData] = useState([]);
 
@@ -29,8 +29,11 @@ const Movies = () => {
 
   return (
     <div className="movies">
-      {data.length<1 && <h1>No Movies found</h1>}
-      {data && data.length > 0 && (
+      <Link to="/new-movie">
+          <button className="productAddButton">Create</button>
+      </Link>
+      {!isFetching && data.length<1 && <h1>No Movies found</h1>}
+      {!isFetching && data && data.length > 0 && (
         <DataTable
           onDelete={deleteHandler}
           type="movie"
