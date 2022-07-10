@@ -6,6 +6,7 @@ import { createMovie } from "../../context/movieContext/apiCalls";
 import { useContext } from "react";
 import { MovieContext } from "../../context/movieContext/MovieContetxt";
 import { AuthContext } from "../../context/authContext/AuthContext";
+import { useNavigate } from "react-router-dom";
 const NewMovie = () => {
   const [movie, setMovie] = useState(null);
   const [img, setImg] = useState(null);
@@ -14,8 +15,9 @@ const NewMovie = () => {
   const [trailer, setTrailer] = useState(null);
   const [video, setVideo] = useState(null);
   const [uploaded, setUploaded] = useState(0);
-  const {dispatch}=useContext(MovieContext)
-  const {user}=useContext(AuthContext)
+  const {dispatch}=useContext(MovieContext);
+  const {user}=useContext(AuthContext);
+  const navigate=useNavigate();
 
   const handleChange = (e) => {
     const value = e.target.value;
@@ -62,7 +64,7 @@ const NewMovie = () => {
     e.preventDefault();
     console.log("Movie is Uploaded ", movie);
     await createMovie(dispatch,movie,user.token);
-    alert("Movie added:  ",movie)
+    // navigate("/movies");
   };
 
   return (

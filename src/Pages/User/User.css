@@ -136,6 +136,17 @@
     color: white;
     font-weight: 600;
 }
+
+.errMsg {
+    margin-bottom: 10px;
+    padding: 20px 10px;
+    background-color: #F6D7DA;
+    width: 310px;
+    border-radius: 10px;
+    text-align: center;
+    color: #D16C36;
+}
+
 @media (max-width:620px){
     .userUpdateForm{
         display: block;

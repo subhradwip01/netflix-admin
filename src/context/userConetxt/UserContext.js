@@ -4,7 +4,10 @@ import UserReducers from "./UserReducers";
 const INITIAL_STATE = {
   users: [],
   isFetching: false,
-  error: false,
+  error: {
+    has:false,
+    message:""
+  },
 };
 
 export const UserContext = createContext(INITIAL_STATE);

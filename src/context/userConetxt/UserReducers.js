@@ -6,19 +6,28 @@ const userReducers = (state, action) => {
         return {
           users: [],
           isFetching: true,
-          error: false,
+          error: {
+            has:false,
+            message:""
+          },
         };
       case "GET_USERS_SUCCESS":
         return {
           users: action.payload,
           isFetching: false,
-          error: false,
+          error: {
+            has:false,
+            message:""
+          },
         };
       case "GET_USERS_FAILURE":
         return {
           users: [],
           isFetching: false,
-          error: true,
+          error: {
+            has:true,
+            message:action.payload
+          },
         };
   
       // Delete movie 
@@ -26,6 +35,10 @@ const userReducers = (state, action) => {
         return {
           ...state,
           isFetching: true,
+          error: {
+            has:false,
+            message:""
+          },
         };
       case "DELETE_USER_SUCCESS":
         console.log(action.payload)  
@@ -38,35 +51,53 @@ const userReducers = (state, action) => {
         return {
           ...state,
           isFetching: false,
-          error: true,
+          error: {
+            has:true,
+            message:action.payload
+          },
         };
   
   
       // Create movie
-      case "CREATE_MOVIE_START":
+      case "CREATE_USER_START":
           return{
               ...state,
               isFetching:true,
+              error: {
+                has:false,
+                message:""
+              },
           }
-      case "CREATE_MOVIE_SUCCESS":
+      case "CREATE_USER_SUCCESS":
           return{
               users:[...state.users,action.users],
               isFetching:false,
-              error:false
+              error: {
+                has:false,
+                message:""
+              },
           }
-      case "CREATE_MOVIE_FAILURE":
+      case "CREATE_USER_FAILURE":
+        console.log(action.payload)
           return{
               ...state,
               isFetching:false,
-              error:true
+              error: {
+                has:true,
+                message:action.payload
+              },
           }
       // Upadate movie
-      case "UPADTE_MOVIE_START":
+      case "UPADTE_USER_START":
           return{
               ...state,
               isFetching:true,
+              error: {
+                has:false,
+                message:""
+              },
           }
-      case "UPADTE_MOVIE_SUCCESS":
+      case "UPADTE_USER_SUCCESS":
           const index=state.users.findIndex(user=>user._id===action.payload._id)
           const updatedUsers=[...state.users];
           updatedUsers[index]=action.payload;
@@ -74,13 +105,19 @@ const userReducers = (state, action) => {
           return{
               users:updatedUsers,
               isFetching:false,
-              error:false
+              error: {
+                has:false,
+                message:""
+              },
           }
-      case "UPADTE_MOVIE_FAILURE":
+      case "UPADTE_USER_FAILURE":
           return{
               ...state,
               isFetching:false,
-              error:true
+              error: {
+                has:true,
+                message:action.payload
+              },
           }
   
       default:

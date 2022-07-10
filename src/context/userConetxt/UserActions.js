@@ -6,8 +6,9 @@ export const getUsersSuccess=(users)=>({
     type:"GET_USERS_SUCCESS",
     payload:users
 })
-export const getUsersFailure=()=>({
-    type:"GET_USER_FAILURE"
+export const getUsersFailure=(message)=>({
+    type:"GET_USER_FAILURE",
+    payload:message
 })
 
 // Delete a movie
@@ -18,8 +19,9 @@ export const deleteUserSuccess=(userId)=>({
     type:"DELETE_USER_SUCCESS",
     payload:userId
 })
-export const deleteUserFailure=()=>({
-    type:"DELETE_USER_FALUERE"
+export const deleteUserFailure=(message)=>({
+    type:"DELETE_USER_FALUERE",
+    payload:message
 })
 
 // Upadate a movie
@@ -30,8 +32,9 @@ export const upadteUserSuccess=(user)=>({
     type:"UPADTE_USER_SUCCESS",
     payload:user
 })
-export const upadteUserFailuer=()=>({
-    type:"UPADTE_USER_FAILURE"
+export const upadteUserFailuer=(message)=>({
+    type:"UPADTE_USER_FAILURE",
+    payload:message
 })
 
 // Create a new movie
@@ -42,6 +45,7 @@ export const createUserSuccess=(user)=>({
     type:"CREATE_USER_SUCCESS",
     payload:user
 })
-export const createUserFailuer=()=>({
-    type:"CREATE_USER_FAILURE"
+export const createUserFailuer=(message)=>({
+    type:"CREATE_USER_FAILURE",
+    payload:message
 })

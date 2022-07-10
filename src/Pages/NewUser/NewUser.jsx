@@ -5,7 +5,7 @@ import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import storage from "../../firebase";
 import { UserContext } from '../../context/userConetxt/UserContext';
 import { createUser } from '../../context/userConetxt/apiCalls';
-import { async } from '@firebase/util';
+import {useNavigate} from "react-router-dom"
 
 const NewUser = () => {
   const [userdata,setUserData]=useState({
@@ -17,8 +17,8 @@ const NewUser = () => {
   });
   const [img,setImg]=useState(null);
   const [uploaded,setUploaed]=useState(false);
-  const {dispatch,isFething,error}=useContext(UserContext)
-  
+  const {dispatch,isFetching,error}=useContext(UserContext)
+  const navigate=useNavigate();
   const userInputHandler=(e)=>{
     setUserData({...userdata,[e.target.name]:e.target.value})
   }
@@ -53,11 +53,23 @@ const NewUser = () => {
  const createUserHandler= async (e)=>{
     e.preventDefault();
     console.log(userdata);
+    if(userdata.email==="" || userdata.password==="" || userdata.username===""){
+      alert("Enter All Field");
+      return;
+    }
     await createUser(dispatch,userdata);
  }
 
+  // if(!error.has){
+  //  return navigate("/users")
+  // }
+console.log(error.message)
   return (
     <div className='newUser'>
+        {
+        error.has && (
+          <div className="errMsg">{ error.message }</div>
+        )}
         <h1 className="newUserTitle">New User</h1>
         <form className='newUserFormContainer'>
         <div className="newUserForm"> 
@@ -100,7 +112,7 @@ const NewUser = () => {
            </div>
            </div> 
            {img && !uploaded ? <button className="userCreateButton" onClick={uploadHandler}>Upload</button>
-           : <button className="userCreateButton" onClick={createUserHandler}>Create</button>}
+           : <button className="userCreateButton" onClick={createUserHandler} disabled={isFetching}>Create</button>}
         </form>
     </div>
   )

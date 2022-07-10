@@ -26,7 +26,7 @@ export const getUsers = async (dispatch) => {
     console.log(res.data.users)
     dispatch(getUsersSuccess(res.data.users));
   } catch (error) {
-    dispatch(getUsersFailure());
+    dispatch(getUsersFailure(error.response.data.message || "Unable to Get the users!"));
     console.log(error);
   }
 };
@@ -42,7 +42,7 @@ export const deleteUser = async (dispatch, id) => {
     });
     dispatch(deleteUserSuccess(id));
   } catch (error) {
-    dispatch(deleteUserFailure());
+    dispatch(deleteUserFailure(error.response.data.message || "Unable to delete! Please try again later"));
   }
 };
 
@@ -59,22 +59,24 @@ export const createUser = async (dispatch, u) => {
     
     dispatch(createUserSuccess(res.data.userDetails));
   } catch (error) {
-    console.log(error)
-    dispatch(createUserFailuer());
+    // console.log(error.response.data.message)
+    dispatch(createUserFailuer(error.response.data.message || "Unable to create! Please try again later"));
   }
 };
 
 export const upadateUser= async (dispatch,u)=>{
   try {
-    dispatch(upadteUserStart());
+    // dispatch(upadteUserStart());
+    
     const res=await axios.put(`/users/${u._id}`,u, {
       headers: {
         Authorization: `Bearer ${JSON.parse(localStorage.getItem("user")).token}`,
       },
     });
-    dispatch(upadteUserSuccess(res.data.updatedUser));
+    console.log(res.data)
+    dispatch(upadteUserSuccess(res.data.userInfo));
   } catch (error) {
-
-    dispatch(upadteUserFailuer(error))
+    console.log(error.response.data.message)
+    dispatch(upadteUserFailuer(error.response.data.message || "Unable to update! Please try again later"))
   }
 }
