@@ -4,7 +4,10 @@ import MovieReducers from "./MovieReducers";
 const INITIAL_STATE = {
   movies: [],
   isFetching: false,
-  error: false,
+  error: {
+    has:false,
+    message:"",
+  },
 };
 
 export const MovieContext = createContext(INITIAL_STATE);

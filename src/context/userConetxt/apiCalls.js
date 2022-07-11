@@ -47,7 +47,7 @@ export const deleteUser = async (dispatch, id) => {
 };
 
 // add movie
-export const createUser = async (dispatch, u) => {
+export const createUser = async (dispatch, u,naviagte) => {
   dispatch(createUserStart());
   console.log("Inside api")
   try {
@@ -56,17 +56,18 @@ export const createUser = async (dispatch, u) => {
         Authorization: `Bearer ${JSON.parse(localStorage.getItem("user")).token}`,
       },
     });
-    
+    console.log(res.data.userDetails)
     dispatch(createUserSuccess(res.data.userDetails));
+    naviagte("/users")
   } catch (error) {
     // console.log(error.response.data.message)
     dispatch(createUserFailuer(error.response.data.message || "Unable to create! Please try again later"));
   }
 };
 
-export const upadateUser= async (dispatch,u)=>{
+export const upadateUser= async (dispatch,u,navigate)=>{
   try {
-    // dispatch(upadteUserStart());
+    dispatch(upadteUserStart());
     
     const res=await axios.put(`/users/${u._id}`,u, {
       headers: {
@@ -75,6 +76,7 @@ export const upadateUser= async (dispatch,u)=>{
     });
     console.log(res.data)
     dispatch(upadteUserSuccess(res.data.userInfo));
+    navigate("/users");
   } catch (error) {
     console.log(error.response.data.message)
     dispatch(upadteUserFailuer(error.response.data.message || "Unable to update! Please try again later"))

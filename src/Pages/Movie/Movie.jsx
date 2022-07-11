@@ -3,7 +3,6 @@ import "./Movie.css";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import storage from "../../firebase";
-import { AuthContext } from "../../context/authContext/AuthContext";
 import { MovieContext } from "../../context/movieContext/MovieContetxt";
 import { upadateMovie } from "../../context/movieContext/apiCalls";
 
@@ -18,8 +17,8 @@ const Movie = () => {
   const [trailer, setTrailer] = useState(null);
   const [video, setVideo] = useState(null);
   const [needToUpload,setNeedToUpload]=useState(false);
-  const {user}=useContext(AuthContext);
-  const {dispatch}=useContext(MovieContext);
+  const [uploading,setUploading]=useState(false);
+  const {dispatch,isFetching,error}=useContext(MovieContext);
   const navigate=useNavigate()
   const handleChange = (e) => {
     const value = e.target.value;
@@ -28,7 +27,7 @@ const Movie = () => {
   };
 
   const upload = (items) => {
-    console.log(items);
+    setUploading(true);
     items.forEach((item) => {
       if(item.file){
       const filename=new Date().getTime() + item.file.name
@@ -48,7 +47,7 @@ const Movie = () => {
           getDownloadURL(uploadTask.snapshot.ref).then((url) => {
             setFormData((prev) => ({ ...prev, [item.label]: url }));
             setNeedToUpload(false)
-
+            setUploading(false)
           });
         }
       );
@@ -72,8 +71,7 @@ const Movie = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
    
-    await upadateMovie(dispatch,formData,user.token)
-    navigate(-1)
+    await upadateMovie(dispatch,formData,navigate)
   };
 
   return (
@@ -117,6 +115,10 @@ const Movie = () => {
         </div>
       </div>
       <div className="movieBottom">
+      {
+        error.has && (
+          <div className="errMsg">{ error.message}</div>
+        )}
         <form className="movieForm">
           <div className="movieFormLeft">
             <label>movie Title</label>
@@ -188,11 +190,10 @@ const Movie = () => {
               onChange={(e) => {setImgSm(e.target.files[0]);setNeedToUpload(true)}}
             />
             {(img || imgSm || imgTitle || trailer || video) && needToUpload ? (
-              <button className="movieButton" onClick={handleUpload}>
-                Upload
+              <button className="movieButton" onClick={handleUpload} disabled={uploading}>
+                {uploading? "Uploading...":"Upload"}
               </button>
-            ) : null}
-            {!needToUpload && <button className="movieButton" onClick={handleSubmit}>Update</button>}
+            ) :  <button className="movieButton" onClick={handleSubmit} disabled={isFetching}>{isFetching? "Updating..." : "Update"}</button>}
           </div>
         </form>
       </div>

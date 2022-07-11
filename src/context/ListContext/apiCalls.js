@@ -11,6 +11,7 @@ import {
   getListsSuccess,
   updateListStart,
   updateListSuccess,
+  updateListFailure
 } from "./ListAction";
 
 export const getLists = async (dispatch) => {
@@ -30,7 +31,7 @@ export const getLists = async (dispatch) => {
 };
 
 //create
-export const createList = async (list, dispatch) => {
+export const createList = async (list, dispatch,naviagte) => {
   dispatch(createListStart());
   try {
     const res = await axios.post("/lists/add", list, {
@@ -40,6 +41,7 @@ export const createList = async (list, dispatch) => {
     });
     // console.log(res.data)
     dispatch(createListSuccess(res.data.list));
+    naviagte("/lists")
   } catch (err) {
     dispatch(createListFailure());
   }
@@ -60,7 +62,7 @@ export const deleteList = async (id, dispatch) => {
   }
 };
 
-export const updateList= async (dispatch,list,token)=>{
+export const updateList= async (dispatch,list,naviagte)=>{
   try {
     dispatch(updateListStart());
     const res=await axios.put("/lists/"+list._id,list,{
@@ -69,8 +71,9 @@ export const updateList= async (dispatch,list,token)=>{
       }
     })
     dispatch(updateListSuccess(res.data.updatedList))
+    naviagte("/lists")
   } catch (error) {
-    
+    dispatch(updateListFailure("Unable to update list"))
   }
     
 }

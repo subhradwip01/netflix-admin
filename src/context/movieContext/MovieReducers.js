@@ -6,19 +6,28 @@ const MovieReducers = (state, action) => {
       return {
         movies: [],
         isFetching: true,
-        error: false,
+        error: {
+          has:false,
+          message:"",
+        },
       };
     case "GET_MOVIES_SUCCESS":
       return {
         movies: action.payload,
         isFetching: false,
-        error: false,
+        error: {
+          has:false,
+          message:"",
+        },
       };
     case "GET_MOVIES_FAILURE":
       return {
         movies: [],
         isFetching: false,
-        error: true,
+        error: {
+          has:true,
+          message:action.payload,
+        },
       };
 
     // Delete movie 
@@ -26,6 +35,10 @@ const MovieReducers = (state, action) => {
       return {
         ...state,
         isFetching: true,
+        error: {
+          has:false,
+          message:"",
+        },
       };
     case "DELETE_MOVIES_SUCCESS":
       console.log(action.payload)  
@@ -38,7 +51,10 @@ const MovieReducers = (state, action) => {
       return {
         ...state,
         isFetching: false,
-        error: true,
+        error: {
+          has:true,
+          message:action.payload,
+        },
       };
 
 
@@ -47,24 +63,38 @@ const MovieReducers = (state, action) => {
         return{
             ...state,
             isFetching:true,
+            error: {
+              has:false,
+              message:"",
+            },
         }
     case "CREATE_MOVIE_SUCCESS":
         return{
             movies:[...state.movies,action.payload],
             isFetching:false,
-            error:false
+            error: {
+              has:false,
+              message:"",
+            },
         }
     case "CREATE_MOVIE_FAILURE":
         return{
             ...state,
             isFetching:false,
-            error:true
+            error: {
+              has:true,
+              message:action.payload,
+            },
         }
     // Upadate movie
     case "UPADTE_MOVIE_START":
         return{
             ...state,
             isFetching:true,
+            error: {
+              has:false,
+              message:"",
+            },
         }
     case "UPADTE_MOVIE_SUCCESS":
         const index=state.movies.findIndex(movie=>movie.id===action.payload.id)
@@ -74,13 +104,19 @@ const MovieReducers = (state, action) => {
         return{
             movies:updatedMovies,
             isFetching:false,
-            error:false
+            error: {
+              has:false,
+              message:"",
+            },
         }
     case "UPADTE_MOVIE_FAILURE":
         return{
             ...state,
             isFetching:false,
-            error:true
+            error: {
+              has:true,
+              message:action.payload,
+            },
         }
 
     default:

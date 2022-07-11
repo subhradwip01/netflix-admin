@@ -14,8 +14,6 @@ const Users = () => {
     dispatch,
   } = useContext(UserContext);
   
-
-  
   console.log(data);
   useEffect(() => {
     getUsers(dispatch);
@@ -30,6 +28,11 @@ const Users = () => {
       <Link to="/new-user">
           <button className="productAddButton">Create</button>
       </Link>
+
+      {
+        error.has && (
+          <div className="errMsg">{ error.message}</div>
+        )}
       {!isFetching && data.length<1 && <h1>No Movies found</h1>}
       {data && data.length > 0 && (
         <DataTable

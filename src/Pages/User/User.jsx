@@ -1,7 +1,7 @@
 import React,{useState} from 'react'
 import "./User.css"
 import { Publish, PersonOutline, MailOutline, EventAvailable, SupervisorAccount } from "@material-ui/icons"
-import { Link, useLocation } from "react-router-dom"
+import { Link, useLocation,useNavigate } from "react-router-dom"
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import storage from "../../firebase";
 import { useContext } from 'react';
@@ -13,8 +13,13 @@ const User = () => {
   // console.log(user)
   const [formData,setFormData]=useState({...user}||null)
   const [newImg,setNewImg]=useState(null);
-  const {dispatch,isFething,error}=useContext(UserContext);
-  const uploadHandler=()=>{
+  const [uploading,setUploading]=useState(false);
+  const [uploaded,setUploaded]=useState(false);
+  const {dispatch,isFetching,error}=useContext(UserContext);
+  const navigate=useNavigate();
+  const uploadHandler=(e)=>{
+        e.preventDefault()
+        setUploading(true);
         const filename=new Date().getTime() + newImg.name
         const bucketRef = ref(storage, `profiles/${filename}`);
         const uploadTask = uploadBytesResumable(bucketRef, newImg);
@@ -31,20 +36,21 @@ const User = () => {
           () => {
             getDownloadURL(uploadTask.snapshot.ref).then((url) => {
               setFormData((prev) => ({ ...prev, profilePic: url }));
+              setUploading(false);
+              setUploaded(true);
             });
           }
         );
    }
    const inputHandler=(e)=>{
+    
     setFormData(p=>({...p,[e.target.name]:e.target.value}));
+    console.log(formData)
    }
    const updateHandler=async(e)=>{
     e.preventDefault();
-    // console.log(formData)
-      if(newImg){
-       uploadHandler();
-      }
-      await upadateUser(dispatch,formData)
+    console.log(formData);
+    await upadateUser(dispatch,formData,navigate)
    }
    
   return (
@@ -82,10 +88,6 @@ const User = () => {
           </div>
         </div>
         <div className='userUpdate'>
-        {
-        error.has && (
-          <div className="errMsg">{ error.message.username || error.message.email }</div>
-        )}
           <span className='userUpdateTtile'>Edit</span>
           <form className="userUpdateForm">
             <div className="userUpdateLeft">
@@ -93,12 +95,14 @@ const User = () => {
                 <label>Username</label>
                 <input
                   type="text"
-                  className="userUpdateInput"
+                  className={error.has && error.message.username ? "userUpdateInput errInput" : "userUpdateInput"}
                   placeholder={formData.username}
                   value={formData.username}
                   onChange={inputHandler}
                   name="username"
+
                 />
+                {error.has && error.message.username && <small className='err'>{error.message.username}</small>}
               </div>
               <div className="userUpdateItem">
                 <label>Email</label>
@@ -106,16 +110,17 @@ const User = () => {
                   type="text"
                   placeholder={formData.email}
                   value={formData.email}
-                  className="userUpdateInput"
+                  className={error.has && error.message.email ? "userUpdateInput errInput" : "userUpdateInput"}
                   onChange={inputHandler}
                   name="email"
                 />
+                {error.has && error.message.email && <small className='err'>{error.message.email}</small>}
               </div>
               <div className="userUpdateItem">
                 <label>Admin</label>
-                <select name="isAdmin" onChange={inputHandler}>
-                  <option value="true">True</option>
-                  <option value="false">False</option>
+                <select name="isAdmin" value={formData.isAdmin} onChange={inputHandler}>
+                  <option value={true}>True</option>
+                  <option value={false}>False</option>
                 </select>
               </div>
 
@@ -132,9 +137,10 @@ const User = () => {
                 <label htmlFor="file">
                   <Publish className="userUpdateIcon" />
                 </label>
-                <input type="file" id="file" style={{ display: "none" }} onChange={(e)=>setNewImg(e.target.files[0])}/>
+                <input type="file" id="file" style={{ display: "none" }} onChange={(e)=>{setNewImg(e.target.files[0]);setUploaded(false)}}/>
               </div>
-              <button className="userUpdateButton" onClick={updateHandler}>Update</button>
+              {newImg && !uploaded ? <button className="userUpdateButton" onClick={uploadHandler} disabled={uploading}>{uploading? "Updloading..." :"Upload"}</button>
+              : <button className="userUpdateButton" onClick={updateHandler} disabled={isFetching}>{isFetching? "Updating..." :"Update"}</button>}
             </div>
           </form>
         </div>

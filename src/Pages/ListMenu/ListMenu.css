@@ -33,4 +33,12 @@
     color: red;
     cursor: pointer;
 }
-
+.errMsg {
+    margin-bottom: 10px;
+    padding: 20px 10px;
+    background-color: #F6D7DA;
+    width: 310px;
+    border-radius: 10px;
+    text-align: center;
+    color: #D16C36;
+  }

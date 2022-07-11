@@ -10,7 +10,7 @@ import {  useNavigate } from "react-router-dom";
 const NewList=() =>{
   const [list, setList] = useState(null);
 
-  const { dispatch } = useContext(ListContext);
+  const { dispatch,isFetching,error } = useContext(ListContext);
   const { movies, dispatch: dispatchMovie } = useContext(MovieContext);
 
 
@@ -31,13 +31,16 @@ const NewList=() =>{
 
   const handleSubmit =async (e) => {
     e.preventDefault();
-    await createList(list, dispatch);
-    // navigate(-1);
+    await createList(list, dispatch,navigate);
   };
 
   return (
     <div className="newProduct">
       <h1 className="addProductTitle">New List</h1>
+      {
+        error.has && (
+          <div className="errMsg">{ error.message}</div>
+        )}
       <form className="addProductForm">
         <div className="formLeft">
           <div className="addProductItem">
@@ -84,8 +87,8 @@ const NewList=() =>{
             </select>
           </div>
         </div>
-        <button className="addProductButton" onClick={handleSubmit}>
-          Create
+        <button className="addProductButton" onClick={handleSubmit} disabled={isFetching}>
+          {isFetching? "Creating..." : "Create"}
         </button>
       </form>
     </div>

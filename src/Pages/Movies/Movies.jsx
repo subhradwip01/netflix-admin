@@ -32,8 +32,12 @@ const Movies = () => {
       <Link to="/new-movie">
           <button className="productAddButton">Create</button>
       </Link>
+      {
+        error.has && (
+          <div className="errMsg">{ error.message}</div>
+        )}
       {!isFetching && data.length<1 && <h1>No Movies found</h1>}
-      {!isFetching && data && data.length > 0 && (
+      {data && data.length > 0 && (
         <DataTable
           onDelete={deleteHandler}
           type="movie"

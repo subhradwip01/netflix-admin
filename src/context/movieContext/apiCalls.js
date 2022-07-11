@@ -42,12 +42,12 @@ export const getMovies = async (dispatch, token) => {
     );
     dispatch(getMoviesSuccess(movies));
   } catch (error) {
-    dispatch(getMoviesFailure());
+    dispatch(getMoviesFailure(error.response.data.message || "Unable to Get Movies! Please try again later"));
     console.log(error);
   }
 };
 
-export const deleteMovies = async (dispatch, id, token) => {
+export const deleteMovies = async (dispatch, id) => {
   dispatch(deleteMoviesStart());
   console.log(id);
   try {
@@ -58,14 +58,13 @@ export const deleteMovies = async (dispatch, id, token) => {
     });
     dispatch(deleteMoviesSuccess(id));
   } catch (error) {
-    dispatch(deleteMoviesFailure);
+    dispatch(deleteMoviesFailure(error.response.data.message || "Unable to Delete! Please try again later"));
   }
 };
 
 // add movie
-export const createMovie = async (dispatch, m, token) => {
+export const createMovie = async (dispatch, m, navigate) => {
   dispatch(createMovieStart());
-  console.log("Inside api")
   try {
     const res = await axios.post('/movies/add', m, {
       headers: {
@@ -89,13 +88,14 @@ export const createMovie = async (dispatch, m, token) => {
       trailer: movie.trailer,
     };
     dispatch(createMovieSuccess(newMovie));
+    navigate("/movies")
   } catch (error) {
     console.log(error)
-    dispatch(createMovieFailuer());
+    dispatch(createMovieFailuer(error.response.data.message || "Unable to Create! Please try again later"));
   }
 };
 
-export const upadateMovie= async (dispatch,m,token)=>{
+export const upadateMovie= async (dispatch,m,navigate)=>{
   try {
     dispatch(upadteMovieStart);
     const {id,...movieDesc}=m;
@@ -121,7 +121,8 @@ export const upadateMovie= async (dispatch,m,token)=>{
       trailer: movie.trailer,
     };
     dispatch(upadteMovieSuccess(uMovie));
+    navigate("/movies")
   } catch (error) {
-    dispatch(upadteMovieFailuer)
+    dispatch(upadteMovieFailuer(error.response.data.message || "Unable to update! Please try again later"))
   }
 }

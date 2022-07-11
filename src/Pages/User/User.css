@@ -103,6 +103,9 @@
     padding: 5px 3px;
     border-bottom: 1px solid gray;
 }
+.userUpdateInput.errInput{
+    border-bottom: 1px solid #D16C36; 
+}
 .userUpdateInput:focus{
     outline: none;
     border-bottom: 2px solid black;
@@ -137,16 +140,15 @@
     font-weight: 600;
 }
 
-.errMsg {
+.err {
     margin-bottom: 10px;
-    padding: 20px 10px;
-    background-color: #F6D7DA;
-    width: 310px;
-    border-radius: 10px;
-    text-align: center;
     color: #D16C36;
 }
 
+.userCreateButton:disabled{
+    background-color: #7199e9;
+    cursor: not-allowed;
+}
 @media (max-width:620px){
     .userUpdateForm{
         display: block;

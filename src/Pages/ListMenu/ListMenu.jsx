@@ -7,7 +7,7 @@ import { ListContext } from "../../context/ListContext/ListContext"
 import { deleteList, getLists } from "../../context/ListContext/apiCalls";
 
 const ListMenu=()=> {
-  const { lists, dispatch,isFetching } = useContext(ListContext);
+  const { lists, dispatch,isFetching,error } = useContext(ListContext);
   
  console.log(lists)
   useEffect(() => {
@@ -50,8 +50,12 @@ const ListMenu=()=> {
       <Link to="/newList">
           <button className="productAddButton">Create</button>
       </Link>
+      {
+        error.has && (
+          <div className="errMsg">{ error.message}</div>
+        )}
       {!isFetching && lists.length<1 && <h1>No Movie Lists found</h1>}
-      {!isFetching && lists.length>0 && <DataGrid
+      {lists.length>0 && <DataGrid
         rows={lists}
         disableSelectionOnClick
         columns={columns}

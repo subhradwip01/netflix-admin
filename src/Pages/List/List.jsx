@@ -1,15 +1,13 @@
 import React,{useState,useContext} from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-
 import "./List.css";
-import { Publish } from "@material-ui/icons";
 import { updateList } from "../../context/ListContext/apiCalls";
 import { ListContext } from "../../context/ListContext/ListContext";
 
 const List=()=> {
   const location = useLocation();
   const list = location.state.list;
-  const {dispatch}=useContext(ListContext)
+  const {dispatch,isFetching,error}=useContext(ListContext)
   const [formData,setFormData]=useState(list);
   const navigate=useNavigate();
   const inputHandler=(e)=>{
@@ -17,10 +15,7 @@ const List=()=> {
   }
   const updateMoviesHandler=async(e)=>{
     e.preventDefault();
-    // const {_id,...updatedData}=formData;
-    console.log(formData)
-    await updateList(dispatch,formData)
-    // navigate("/lists")
+    await updateList(dispatch,formData,navigate)
   }
   return (
     <div className="product">
@@ -52,6 +47,10 @@ const List=()=> {
         </div>
       </div>
       <div className="productBottom">
+      {
+        error.has && (
+          <div className="errMsg">{ error.message}</div>
+        )}
         <form className="productForm">
           <div className="productFormLeft">
             <label>List Title</label>
@@ -66,7 +65,7 @@ const List=()=> {
             <input type="text" name="genre" onChange={inputHandler} placeholder={list.genre} />
           </div>
           <div className="productFormRight">
-            <button className="productButton" onClick={updateMoviesHandler}>Update</button>
+            <button className="productButton" onClick={updateMoviesHandler} disabled={isFetching}>{isFetching? "Updating..." : "Update"}</button>
           </div>
         </form>
       </div>

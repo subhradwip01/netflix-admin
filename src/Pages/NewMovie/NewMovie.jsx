@@ -5,7 +5,6 @@ import storage from "../../firebase";
 import { createMovie } from "../../context/movieContext/apiCalls";
 import { useContext } from "react";
 import { MovieContext } from "../../context/movieContext/MovieContetxt";
-import { AuthContext } from "../../context/authContext/AuthContext";
 import { useNavigate } from "react-router-dom";
 const NewMovie = () => {
   const [movie, setMovie] = useState(null);
@@ -15,8 +14,8 @@ const NewMovie = () => {
   const [trailer, setTrailer] = useState(null);
   const [video, setVideo] = useState(null);
   const [uploaded, setUploaded] = useState(0);
-  const {dispatch}=useContext(MovieContext);
-  const {user}=useContext(AuthContext);
+  const [uploading,setUploading]=useState(false);
+  const {dispatch,isFetching,error}=useContext(MovieContext);
   const navigate=useNavigate();
 
   const handleChange = (e) => {
@@ -25,6 +24,7 @@ const NewMovie = () => {
   };
 
   const upload = (items) => {
+    setUploading(true);
     items.forEach((item) => {
       const filename=new Date().getTime() + item.file.name
       const bucketRef = ref(storage, `items/${filename}`);
@@ -43,6 +43,7 @@ const NewMovie = () => {
           getDownloadURL(uploadTask.snapshot.ref).then((url) => {
             setMovie((prev) => ({ ...prev, [item.label]: url }));
             setUploaded(prev=>prev+1)
+            uploaded===5 && setUploading(false);
           });
         }
       );
@@ -63,13 +64,18 @@ const NewMovie = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     console.log("Movie is Uploaded ", movie);
-    await createMovie(dispatch,movie,user.token);
-    // navigate("/movies");
+    await createMovie(dispatch,movie,navigate);
+    
   };
 
   return (
     <div className="newMovie">
+
       <h1 className="addMovieTitle">New Movie</h1>
+      {
+        error.has && (
+          <div className="errMsg">{ error.message}</div>
+        )}
       <form className="addMovieForm">
         <div className="addMovieItem">
           <label>Image</label>
@@ -176,12 +182,12 @@ const NewMovie = () => {
           />
         </div>
         {uploaded === 5 ? (
-          <button className="addMovieButton" onClick={handleSubmit}>
-            Create
+          <button className="addMovieButton" onClick={handleSubmit} disabled={isFetching}>
+            {isFetching?"Creating..." : "Create"}
           </button>
         ) : (
-          <button className="addMovieButton" onClick={handleUpload}>
-            Upalod
+          <button className="addMovieButton" onClick={handleUpload} disabled={uploading}>
+            {uploading? "Upaloding..." : "Upload"}
           </button>
         )}
       </form>

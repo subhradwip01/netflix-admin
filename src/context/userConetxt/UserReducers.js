@@ -70,7 +70,7 @@ const userReducers = (state, action) => {
           }
       case "CREATE_USER_SUCCESS":
           return{
-              users:[...state.users,action.users],
+              users:[...state.users,action.payload],
               isFetching:false,
               error: {
                 has:false,
