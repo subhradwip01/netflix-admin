@@ -57,9 +57,9 @@ function App() {
       <Routes>
         <Route path="login" element={user ? <Navigate to="/" /> : <Login />} />
 
+        <Route path="/" element={user?<Home />:<Navigate to="/login"/>} />
         {user && (
           <>
-              <Route path="/" element={<Home />} />
 
               <Route path="users" element={<Users />} />
               <Route path="users/:id" element={<User />} />
