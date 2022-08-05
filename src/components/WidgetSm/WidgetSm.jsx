@@ -3,7 +3,7 @@ import axios from "axios";
 import "./WidgetSm.css";
 import { Email, Person } from "@material-ui/icons";
 import { AuthContext } from "../../context/authContext/AuthContext";
-
+import { api } from "../../config";
 export default function WidgetSm() {
   const [latestUser, setLatestUser] = useState([]);
   const [error, setError] = useState(false);
@@ -12,17 +12,13 @@ export default function WidgetSm() {
   useEffect(() => {
     const getLatestUser = async () => {
       try {
-        const res = await axios.get("/users?latest=true", {
+        const res = await api.get("/users?latest=true", {
           headers: {
             Authorization:
             `Bearer ${user.token}`,
           },
         });
-        if (res.status !== 200) {
-          setError(true);
-          return;
-        }
-        console.log(res.data.users);
+        
         let users = [];
         res.data.users.map((user) =>
           users.push({
@@ -35,7 +31,6 @@ export default function WidgetSm() {
         setLatestUser(users);
       } catch (error) {
         setError(true);
-        console.log(error);
       }
     };
     getLatestUser();

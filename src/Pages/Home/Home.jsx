@@ -6,6 +6,7 @@ import WidgetLg from "../../components/WidgetLg/WidgetLg";
 import WidgetSm from "../../components/WidgetSm/WidgetSm";
 import axios from "axios";
 import { AuthContext } from "../../context/authContext/AuthContext";
+import { api } from "../../config";
 const Home = () => {
   const months = useMemo(
     () => [
@@ -32,21 +33,12 @@ const Home = () => {
   useEffect(() => {
     const getData = async () => {
       try {
-        const res = await axios.get("/users/stats", {
+        const res = await api.get("/users/stats", {
           headers: {
             Authorization:
               `Bearer ${user.token}`,
           },
         });
-        if (res.status === 403) {
-          window.alert("You are not adim to see data");
-          setUserStateError(true);
-          return;
-        }
-        if (res.status !== 200) {
-          setUserStateError(true);
-          return;
-        }
         setUserStateError(false);
         let userStat = [];
         res.data.map((item) =>
