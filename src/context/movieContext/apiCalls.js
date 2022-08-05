@@ -1,4 +1,5 @@
 import axios from "axios";
+import { api } from "../../config";
 import {
   getMoviesStart,
   getMoviesSuccess,
@@ -18,7 +19,7 @@ export const getMovies = async (dispatch, token) => {
   dispatch(getMoviesStart());
 
   try {
-    const res = await axios.get("/movies", {
+    const res = await api.get("/movies", {
       headers: {
         Authorization: `Bearer ${JSON.parse(localStorage.getItem("user")).token}`,
       },
@@ -51,7 +52,7 @@ export const deleteMovies = async (dispatch, id) => {
   dispatch(deleteMoviesStart());
   console.log(id);
   try {
-    await axios.delete(`/movies/${id}`, {
+    await api.delete(`/movies/${id}`, {
       headers: {
         Authorization: `Bearer ${JSON.parse(localStorage.getItem("user")).token}`,
       },
@@ -66,7 +67,7 @@ export const deleteMovies = async (dispatch, id) => {
 export const createMovie = async (dispatch, m, navigate) => {
   dispatch(createMovieStart());
   try {
-    const res = await axios.post('/movies/add', m, {
+    const res = await api.post('/movies/add', m, {
       headers: {
         Authorization: `Bearer ${JSON.parse(localStorage.getItem("user")).token}`,
       },
@@ -99,7 +100,7 @@ export const upadateMovie= async (dispatch,m,navigate)=>{
   try {
     dispatch(upadteMovieStart);
     const {id,...movieDesc}=m;
-    const res=await axios.put(`/movies/${id}`,movieDesc, {
+    const res=await api.put(`/movies/${id}`,movieDesc, {
       headers: {
         Authorization: `Bearer ${JSON.parse(localStorage.getItem("user")).token}`,
       },

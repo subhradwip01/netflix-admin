@@ -1,4 +1,5 @@
 import axios from "axios";
+import { api } from "../../config";
 import {
   createListFailure,
   createListStart,
@@ -18,7 +19,7 @@ export const getLists = async (dispatch) => {
     console.log(JSON.parse(localStorage.getItem("user")).token)
   dispatch(getListsStart());
   try {
-    const res = await axios.get("/lists", {
+    const res = await api.get("/lists", {
       headers: {
         Authorization: "Bearer " + JSON.parse(localStorage.getItem("user")).token,
       },
@@ -34,7 +35,7 @@ export const getLists = async (dispatch) => {
 export const createList = async (list, dispatch,naviagte) => {
   dispatch(createListStart());
   try {
-    const res = await axios.post("/lists/add", list, {
+    const res = await api.post("/lists/add", list, {
       headers: {
         Authorization: "Bearer " + JSON.parse(localStorage.getItem("user")).token,
       },
@@ -51,7 +52,7 @@ export const createList = async (list, dispatch,naviagte) => {
 export const deleteList = async (id, dispatch) => {
   dispatch(deleteListStart());
   try {
-    await axios.delete("/lists/" + id, {
+    await api.delete("/lists/" + id, {
       headers: {
         Authorization: "Bearer " + JSON.parse(localStorage.getItem("user")).token,
       },
@@ -65,7 +66,7 @@ export const deleteList = async (id, dispatch) => {
 export const updateList= async (dispatch,list,naviagte)=>{
   try {
     dispatch(updateListStart());
-    const res=await axios.put("/lists/"+list._id,list,{
+    const res=await api.put("/lists/"+list._id,list,{
       headers: {
         Authorization: "Bearer " + JSON.parse(localStorage.getItem("user")).token,
       }
