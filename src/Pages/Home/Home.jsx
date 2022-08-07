@@ -36,7 +36,7 @@ const Home = () => {
         const res = await api.get("/users/stats", {
           headers: {
             Authorization:
-              `Bearer ${user.token}`,
+            "Bearer " + JSON.parse(localStorage.getItem("user")).token,
           },
         });
         setUserStateError(false);

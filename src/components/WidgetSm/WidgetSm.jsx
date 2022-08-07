@@ -15,7 +15,7 @@ export default function WidgetSm() {
         const res = await api.get("/users?latest=true", {
           headers: {
             Authorization:
-            `Bearer ${user.token}`,
+            "Bearer " + JSON.parse(localStorage.getItem("user")).token,
           },
         });
         
