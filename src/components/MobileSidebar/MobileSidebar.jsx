@@ -1,8 +1,12 @@
 import React from 'react'
 import { Settings, LineStyle, TrendingUp, Timeline, PersonOutline, Slideshow, ExitToApp,FormatListBulleted} from '@material-ui/icons';
 import "./MobileSidebar.css"
-import { NavLink } from 'react-router-dom';
+import { NavLink,useNavigate } from 'react-router-dom';
+import { AuthContext } from '../../context/authContext/AuthContext';
+
 const MobileSidebar = ({showMobileSidebar,onShow}) => {
+    const {onLogout}=React.useContext(AuthContext)
+    const navigate=useNavigate();
     return (
         <div className={`mobileSidebar ${showMobileSidebar ? "showMobileMenu" :""}`}>
             <div className='mobileSidebarWrappper'>
@@ -47,7 +51,7 @@ const MobileSidebar = ({showMobileSidebar,onShow}) => {
 
                         </li>
                         <li className="mobileSidebarListItem">
-                            <button className='mobileSidebarLogoutButton'><ExitToApp className="mobileSidebarIcon"/>Logout</button>
+                            <button className='mobileSidebarLogoutButton' onClick={()=>{onLogout();navigate("/login");}}><ExitToApp className="mobileSidebarIcon"/>Logout</button>
                         </li>
                     </ul>
                 </div>
