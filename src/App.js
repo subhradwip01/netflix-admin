@@ -17,7 +17,8 @@ import ListMenu from "./Pages/ListMenu/ListMenu";
 import List from "./Pages/List/List";
 import NewList from "./Pages/NewList/NewList";
 import { AuthContext } from "./context/authContext/AuthContext";
-
+import {api} from "./config"
+import jwt_decode from "jwt-decode"
 function App() {
   const [mobileSidebar, setMobileSidebar] = useState(false);
   const [showMobileSidebar, setShowMobileSidebar] = useState(false);
@@ -26,14 +27,25 @@ function App() {
       setMobileSidebar(true);
     }
   };
-  const { user } = useContext(AuthContext);
+  const { user,onLogout } = useContext(AuthContext);
 
   useEffect(() => {
     mobileSidebarHandler();
   }, []);
 
   window.addEventListener("resize", mobileSidebarHandler);
-
+  api.interceptors.request.use(async (req) => {
+    const token = JSON.parse(localStorage.getItem("user"))?.token;
+    if (token) {
+      const user = jwt_decode(token);
+      const currentTime = new Date().getTime() / 1000;
+      if (currentTime > user.exp) {
+        onLogout()
+        return req;
+      }
+    }
+    return req;
+  });
   return (
     <div className="App">
       {user && (
