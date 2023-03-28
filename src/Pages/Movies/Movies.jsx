@@ -5,6 +5,7 @@ import { getMovies, deleteMovies } from "../../context/movieContext/apiCalls";
 import { MovieContext } from "../../context/movieContext/MovieContetxt";
 import { AuthContext } from "../../context/authContext/AuthContext";
 import { Link } from "react-router-dom";
+import Loader from "../../components/Loader/Loader";
 const Movies = () => {
   // const [data, setData] = useState([]);
 
@@ -24,6 +25,10 @@ const Movies = () => {
     getMovies(dispatch, user.token);
   }, []);
 
+
+  if(isFetching) {
+    return <Loader/>
+  }
 
   // if (error) return "Sorry unable to get any movies";
 

@@ -98,7 +98,7 @@ export const createMovie = async (dispatch, m, navigate) => {
 
 export const upadateMovie= async (dispatch,m,navigate)=>{
   try {
-    dispatch(upadteMovieStart);
+    dispatch(upadteMovieStart());
     const {id,...movieDesc}=m;
     const res=await api.put(`/movies/${id}`,movieDesc, {
       headers: {

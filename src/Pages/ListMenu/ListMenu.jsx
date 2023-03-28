@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import { useContext, useEffect, useState } from "react";
 import { ListContext } from "../../context/ListContext/ListContext"
 import { deleteList, getLists } from "../../context/ListContext/apiCalls";
+import Loader from "../../components/Loader/Loader";
 
 const ListMenu=()=> {
   const { lists, dispatch,isFetching,error } = useContext(ListContext);
@@ -19,6 +20,9 @@ const ListMenu=()=> {
   const handleDelete = (id) => {
     deleteList(id, dispatch);
   };
+  if(isFetching){
+    return <Loader/>
+  }
 
   const columns = [
     { field: "_id", headerName: "ID", width: 250 },

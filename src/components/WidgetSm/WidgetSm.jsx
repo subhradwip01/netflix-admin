@@ -4,13 +4,16 @@ import "./WidgetSm.css";
 import { Email, Person } from "@material-ui/icons";
 import { AuthContext } from "../../context/authContext/AuthContext";
 import { api } from "../../config";
+import Loader from "../Loader/Loader"
 export default function WidgetSm() {
   const [latestUser, setLatestUser] = useState([]);
   const [error, setError] = useState(false);
-  const {user} = useContext(AuthContext)
+  const {user} = useContext(AuthContext);
+  const [loading,setIsLoading] = useState(false);
 
   useEffect(() => {
     const getLatestUser = async () => {
+      setIsLoading(true);
       try {
         const res = await api.get("/users?latest=true", {
           headers: {
@@ -29,8 +32,10 @@ export default function WidgetSm() {
         );
         setError(false);
         setLatestUser(users);
+        setIsLoading(false)
       } catch (error) {
         setError(true);
+        setIsLoading(false)
       }
     };
     getLatestUser();
@@ -39,6 +44,7 @@ export default function WidgetSm() {
   return (
     <div className="widgetSm">
       <span className="widgetSmTitle">New Join Members</span>
+      {loading && <Loader/>}
       {!error ? (
         <ul className="widgetSmList">
           {latestUser.map(({ profilePic, username, email }) => (

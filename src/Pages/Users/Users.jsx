@@ -6,6 +6,7 @@ import { deleteUser, getUsers } from "../../context/userConetxt/apiCalls";
 import { UserContext } from "../../context/userConetxt/UserContext";
 import { useContext } from "react";
 import { Link } from "react-router-dom";
+import Loader from "../../components/Loader/Loader";
 const Users = () => {
   const {
     users: data,
@@ -23,6 +24,9 @@ const Users = () => {
     await deleteUser(dispatch, id);
   };
   console.log(data)
+  if(isFetching){
+    return <Loader/>
+  }
   return (
     <div className="users">
       <Link to="/new-user">
