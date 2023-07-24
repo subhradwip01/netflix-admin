@@ -34,18 +34,16 @@ const Login = () => {
       return;
     }
     await login({ username: data.email, password: data.password }, dispatch);
+    
   };
 
-  console.log(error,isFetching)
-  // if(user){
-  //   return navigate("/")
-  // }
  
   return (
     <div className="login">
       {err.is || error.has && (
           <div className="errMsg">{err.message || error.message}</div>
         )}
+
       <form className="loginForm">
         <div className="adminImg">
           <img

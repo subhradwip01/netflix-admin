@@ -1,4 +1,4 @@
 import axios from "axios"
 export const api=axios.create({
-    baseURL:"https://subh-netflix-api.onrender.com/netflixApi"
+    baseURL:"https://netflix-clone-api-production-3993.up.railway.app/netflixApi"
 })

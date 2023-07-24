@@ -19,6 +19,7 @@ import NewList from "./Pages/NewList/NewList";
 import { AuthContext } from "./context/authContext/AuthContext";
 import {api} from "./config"
 import jwt_decode from "jwt-decode"
+import 'react-toastify/dist/ReactToastify.css';
 function App() {
   const [mobileSidebar, setMobileSidebar] = useState(false);
   const [showMobileSidebar, setShowMobileSidebar] = useState(false);
